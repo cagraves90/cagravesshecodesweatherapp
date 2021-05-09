@@ -68,3 +68,7 @@ i.fa-cloud {
 .futureForecast {
   font-size: 40px;
 }
+
+#currentCityEmoji {
+  size: 40px;
+}

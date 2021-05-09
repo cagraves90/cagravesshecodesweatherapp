@@ -3,8 +3,11 @@ function displayWeather(response) {
   let description = response.data.weather[0].description;
   let currentCity = document.querySelector("#current-temp");
 
+  let iconElement = document.querySelector("#icon");
+
   currentCity.innerHTML = `${temperature}°C, ${description}`;
-}
+  iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+} 
 
 function search(city) {
   let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
