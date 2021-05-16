@@ -69,6 +69,20 @@ i.fa-cloud {
   font-size: 40px;
 }
 
-#currentCityEmoji {
+.temperature {
+  size: 60px;
+  font-style: normal;
+}
+
+#icon {
+  size: 60px;
+}
+
+#current-temp {
+  size: 40px;
+  font-style: normal;
+}
+
+#units {
   size: 40px;
 }
