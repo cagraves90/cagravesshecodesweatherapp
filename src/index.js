@@ -1,3 +1,9 @@
+function getForecast(coordinates) {
+  let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
 function displayWeather(response) {
   let temperature = Math.round(response.data.main.temp);
   let description = response.data.weather[0].description;
@@ -7,6 +13,8 @@ function displayWeather(response) {
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
 
+  
+
   celsiusTemperature = response.data.main.temp;
 
   currentCityTemp.innerHTML = `${temperature}`;
@@ -14,6 +22,8 @@ function displayWeather(response) {
   humidityElement.innerHTML = response.data.main.humidity;
   windElement.innerHTML = Math.round(response.data.wind.speed);
   iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+
+  getForecast(response.data.coord);
 } 
 
 function displayFahrenheitTemperature(event) {
@@ -33,6 +43,75 @@ function displayCelsiusTemperature(event) {
 
 celciusLink.classList.add("active");
 fahrenheitLink.classList.remove("active");
+}
+
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  forecastElement.innerHTML = ` 
+  <div row>
+              <div class="col">
+                <div class="day">
+                    Monday
+                </div>
+                <div class="forecastEmoji">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="forecastTemp">
+                    19°C
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="day">
+                    Sat
+                </div>
+                <div class="forecastEmoji">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="forecastTemp">
+                    15°C
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="day">
+                    Sun
+                </div>
+                <div class="forecastEmoji">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="forecastTemp">
+                    16°C
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="day">
+                    Mon
+                </div>
+                <div class="forecastEmoji">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="forecastTemp">
+                    20°C
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="day">
+                    Tues
+                </div>
+                <div class="forecastEmoji">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="forecastTemp">
+                    19°C
+                </div>
+            </div>
+
+      </div>
+            `
 }
 
 function search(city) {
@@ -91,3 +170,5 @@ let months = [
 let month = months[now.getMonth()];
 
 p.innerHTML = `${hours}:${minutes}, ${day} ${month} ${date}, ${year}`;
+
+displayForecast();
