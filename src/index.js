@@ -48,70 +48,32 @@ fahrenheitLink.classList.remove("active");
 function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
 
-  forecastElement.innerHTML = ` 
-  <div row>
-              <div class="col">
-                <div class="day">
-                    Monday
+  let forecastHTML = `<div class="row">`;
+
+  let days = ["Thurs", "Fri", "Sat", "Sun", "Mon"];
+  days.forEach(function(day) {
+  forecastHTML = forecastHTML + 
+  `
+              <div class="col-2">
+                <div class="forecastDay">
+                    ${day}
                 </div>
-                <div class="forecastEmoji">
-                    <i class="fas fa-sun"></i>
-                </div>
+                <img src = "http://openweathermap.org/img/wn/50d@2x.png"
+                  alt = ""
+                  width = "42"
+                  />
                 <div class="forecastTemp">
                     19°C
                 </div>
-            </div>
+            </div>         
+  `; 
+  
 
-            <div class="col">
-                <div class="day">
-                    Sat
-                </div>
-                <div class="forecastEmoji">
-                    <i class="fas fa-cloud"></i>
-                </div>
-                <div class="forecastTemp">
-                    15°C
-                </div>
-            </div>
+  }
+)
+  forecastHTML = forecastHTML + `</div>`
 
-            <div class="col">
-                <div class="day">
-                    Sun
-                </div>
-                <div class="forecastEmoji">
-                    <i class="fas fa-sun"></i>
-                </div>
-                <div class="forecastTemp">
-                    16°C
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="day">
-                    Mon
-                </div>
-                <div class="forecastEmoji">
-                    <i class="fas fa-sun"></i>
-                </div>
-                <div class="forecastTemp">
-                    20°C
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="day">
-                    Tues
-                </div>
-                <div class="forecastEmoji">
-                    <i class="fas fa-sun"></i>
-                </div>
-                <div class="forecastTemp">
-                    19°C
-                </div>
-            </div>
-
-      </div>
-            `
+  forecastElement.innerHTML = forecastHTML;
 }
 
 function search(city) {
