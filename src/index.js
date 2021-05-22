@@ -7,6 +7,7 @@ function search(city) {
 }
 
 function displayWeather(response) {
+
   let temperature = Math.round(response.data.main.temp);
   let description = response.data.weather[0].description;
   let currentCityTemp = document.querySelector("#current-temp");
@@ -15,7 +16,8 @@ function displayWeather(response) {
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
   let dateElement = document.querySelector("#current-date")
-
+  dateElement.innerHTML = formatDate(response.data.dt);
+  
   celsiusTemperature = response.data.main.temp;
 
   currentCityTemp.innerHTML = `${temperature}`;
@@ -23,10 +25,11 @@ function displayWeather(response) {
   humidityElement.innerHTML = response.data.main.humidity;
   windElement.innerHTML = Math.round(response.data.wind.speed);
   iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
-  dateElement.innerHTML = formatDate(response.data.dt * 1000);
-
+ 
   getForecast(response.data.coord);
 } 
+
+
 
 function getForecast(coordinates) {
   let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
@@ -75,6 +78,16 @@ function displayForecast(response) {
 }
 
 
+function formatForecastDay (timestamp) {
+
+let date = new Date (timestamp * 1000);
+let day = date.getDay();
+
+let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+
+return days[day]; 
+}
+
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -88,29 +101,22 @@ let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
 
-
 function formatDate(timestamp) {
 
-let date = new Date(timestamp);
+let date = new Date(timestamp * 1000);
 
 let hours = date.getHours();
 let minutes = date.getMinutes();
-let day = days[date.getDay()];
+let weekDay = date.getDay();
+let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
 
 let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-return `${hours}:${minutes}, ${day} ${month} ${date}, ${year}`; 
+return `${hours}:${minutes}, ${days[weekDay]} ${months[month]} ${day}, ${year}`; 
 
 }
 
-function formatForecastDay (timestamp) {
-let date = new Date (timestamp * 1000);
-let day = date.getDay();
 
-let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-
-
-return days[day]; 
-}
