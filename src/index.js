@@ -1,7 +1,9 @@
-function getForecast(coordinates) {
+
+function search(city) {
   let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displayForecast);
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+  axios.get(`${apiUrl}&appID=${apiKey}`).then(displayWeather);
 }
 
 function displayWeather(response) {
@@ -12,6 +14,7 @@ function displayWeather(response) {
   let humidityElement = document.querySelector("#humidity");
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
+  let dateElement = document.querySelector("#current-date")
 
   celsiusTemperature = response.data.main.temp;
 
@@ -20,9 +23,16 @@ function displayWeather(response) {
   humidityElement.innerHTML = response.data.main.humidity;
   windElement.innerHTML = Math.round(response.data.wind.speed);
   iconElement.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
+  dateElement.innerHTML = formatDate(response.data.dt * 1000);
 
   getForecast(response.data.coord);
 } 
+
+function getForecast(coordinates) {
+  let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
 
 function displayForecast(response) {
 
@@ -64,12 +74,7 @@ function displayForecast(response) {
   forecastElement.innerHTML = forecastHTML;
 }
 
-function search(city) {
-  let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-  axios.get(`${apiUrl}&appID=${apiKey}`).then(displayWeather);
-}
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -82,25 +87,21 @@ function handleSubmit(event) {
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
-function currentDate(timestamp) {
 
-let now = new Date(timestamp);
 
-let p = document.querySelector("#current-date");
+function formatDate(timestamp) {
 
-let date = now.getDate();
-let hours = now.getHours();
-let minutes = now.getMinutes();
-let year = now.getFullYear();
+let date = new Date(timestamp);
+
+let hours = date.getHours();
+let minutes = date.getMinutes();
+let day = days[date.getDay()];
+let month = date.getMonth();
+let year = date.getFullYear();
 
 let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-let day = days[now.getDay()];
 
-let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-let month = months[now.getMonth()];
-
-p.innerHTML = `${hours}:${minutes}, ${day} ${month} ${date}, ${year}`;
+return `${hours}:${minutes}, ${day} ${month} ${date}, ${year}`; 
 
 }
 
