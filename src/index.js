@@ -13,8 +13,6 @@ function displayWeather(response) {
   let windElement = document.querySelector("#wind");
   let iconElement = document.querySelector("#icon");
 
-  
-
   celsiusTemperature = response.data.main.temp;
 
   currentCityTemp.innerHTML = `${temperature}`;
@@ -45,32 +43,41 @@ celciusLink.classList.add("active");
 fahrenheitLink.classList.remove("active");
 }
 
-function displayForecast() {
+function displayForecast(response) {
+
+  let forecast = response.data.daily; 
   let forecastElement = document.querySelector("#forecast");
 
   let forecastHTML = `<div class="row">`;
 
-  let days = ["Thurs", "Fri", "Sat", "Sun", "Mon"];
-  days.forEach(function(day) {
+  
+  forecast.forEach(function(forecastDay, index) {
+
+    if (index < 6) {
   forecastHTML = forecastHTML + 
   `
               <div class="col-2">
                 <div class="forecastDay">
-                    ${day}
+                    ${formatForecastDay(forecastDay.dt)}
                 </div>
-                <img src = "http://openweathermap.org/img/wn/50d@2x.png"
+                <img src = "http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
                   alt = ""
                   width = "42"
                   />
                 <div class="forecastTemp">
-                    19°C
+                <span class = "forecast-temp-min">
+                    ${Math.round(forecastDay.temp.max)}°C
+                    </span>
+                    <span class = "forecast-temp-max">
+                    ${Math.round(forecastDay.temp.min)}°C
+                    </span>
                 </div>
             </div>         
   `; 
-  
-
   }
-)
+
+});
+
   forecastHTML = forecastHTML + `</div>`
 
   forecastElement.innerHTML = forecastHTML;
@@ -102,7 +109,15 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
-let now = new Date();
+
+
+
+
+
+
+function currentDate(timestamp) {
+
+let now = new Date(timestamp);
 
 let p = document.querySelector("#current-date");
 
@@ -114,23 +129,20 @@ let year = now.getFullYear();
 let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 let day = days[now.getDay()];
 
-let months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec"
-];
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 let month = months[now.getMonth()];
 
 p.innerHTML = `${hours}:${minutes}, ${day} ${month} ${date}, ${year}`;
 
-displayForecast();
+}
+
+function formatForecastDay (timestamp) {
+let date = new Date (timestamp * 1000);
+let day = date.getDay();
+
+let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+
+
+return days[day]; 
+}
