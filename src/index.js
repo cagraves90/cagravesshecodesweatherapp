@@ -29,8 +29,6 @@ function displayWeather(response) {
   getForecast(response.data.coord);
 } 
 
-
-
 function getForecast(coordinates) {
   let apiKey = "96fcaeced4ad943f030c75cd01f06f5f";
   let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
@@ -44,7 +42,6 @@ function displayForecast(response) {
 
   let forecastHTML = `<div class="row">`;
 
-  
   forecast.forEach(function(forecastDay, index) {
 
     if (index < 6) {
@@ -57,6 +54,7 @@ function displayForecast(response) {
                 <img src = "http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
                   alt = ""
                   width = "42"
+                  id = "forecast-icon"
                   />
                 <div class="forecastTemp">
                 <span class = "forecast-temp-min">
@@ -119,4 +117,4 @@ return `${hours}:${minutes}, ${days[weekDay]} ${months[month]} ${day}, ${year}`;
 
 }
 
-
+search("Auckland");

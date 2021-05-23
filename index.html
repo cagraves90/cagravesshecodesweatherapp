@@ -15,39 +15,40 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="image"></div>
-
+    <div class="container" id = "bootstrapContainer">
+        <div class="row-first">
+            <div class = "col-12">
             <form id="search-form">
                 <input type="text" placeholder="Search for a city" autocomplete="off" autofocus="on"
                     id="search-text-input" />
                 <input type="submit" value="search" class="login" id="search-city" />
             </form>
-
-            <div class="col-12">
-                <div class="city">
-                    <h1 id="current-city">Searching City...</h1>
-                </div>
             </div>
 
-            <div class="col-2">
-                <div class="time">
-                    <h2 class = "currentDate">Last updated at <span id ="current-date"></span></h2>
+            <div class="row">
+                <div class="col">
+                    <h1 id="current-city">Auckland</h1>
+                </div>
+            </div>
+        </div>    
+
+            <div class="row">
+                <div class="col-6" id = "left"> 
+                    <h2 class = "currentDate" id ="update">Last updated at: <span id ="current-date"></span></h2>
+                    <div class="temperature">
+                        <strong class="type" id="weather-description"></strong>
+                        <br />
+                        <strong id="current-temp"></strong>
+                        <span class="units" id = "degrees">°C</span>
+                        
+                    </div>
                 </div>
 
-                <div class="temperature">
-                    <strong id="current-temp"></strong>
-                       <span class = "units">°C</span> 
-                <strong class = "type" id = "weather-description"></strong>
-                    </div>
-
+            <div class = "col-6" id = "right">
                 <div class="weather">
                     <span></span>
                 </div>
-            </div>
-
-            <div class="col-2">
+            <div>
                 <div class="mainEmoji">
                     <img src = ""
                         alt = "Weather icon"
@@ -55,27 +56,31 @@
                 </div>
             </div>
 
-            <div class="col-7">
+            <div class= "">
                 <div class="wind">
                     Wind: <span id = "wind"></span> km/h
                 </div>
                 <div class="humidity">
                     Humidity: <span id = "humidity"></span>%
-                </div>
+                 </div>
                 <div class="precipitation">
                 </div>
             </div>
+        </div>
 
+
+      </div>
+    
             <div>
-                <div class="futureForecast" id = "forecast">
+                <div class="col" id = "forecast">
                     5 day Forecast
                 </div>
             </div>
 
-           
-        </div>
-        <a href="https://github.com/cagraves90/cagravesshecodesweatherapp/">GitHub page link</a>
-    </div>
+        <a href="https://github.com/cagraves90/cagravesshecodesweatherapp/" id = "link">Open Source Code by Chelsea Graves</a>
+</div>
+        
+    
 
     <script src="src/index.js"></script>
 </body>
